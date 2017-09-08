@@ -80,6 +80,7 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
     private String almTimeout;
     private String testingResultFile;
     private String jenkinsServerUrl;
+    private String aliBuildId;
 
     // These getters setters work for reading config.xml.
     public UploadTestResultToAlmModel getUploadTestResultToAlmModel() {
@@ -178,6 +179,14 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
         this.jenkinsServerUrl = jenkinsServerUrl;
     }
 
+    public String getAliBuildId() {
+        return aliBuildId;
+    }
+
+    public void setAliBuildId(String aliBuildId) {
+        this.aliBuildId = aliBuildId;
+    }
+
     @DataBoundConstructor
     public TestResultToALMUploader(
             String almServerName,
@@ -190,7 +199,8 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
             String almTestSetFolder,
             String almTimeout,
             String testingResultFile,
-            String jenkinsServerUrl) {
+            String jenkinsServerUrl,
+            String aliBuildId) {
 
         this.almServerName = almServerName;
         this.credentialsId = credentialsId;
@@ -203,6 +213,7 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
         this.almTimeout = almTimeout;
         this.testingResultFile = testingResultFile;
         this.jenkinsServerUrl = jenkinsServerUrl;
+        this.aliBuildId = aliBuildId;
     }
 
     @Override
@@ -213,7 +224,7 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
     	// Credentials id maybe can't be blank
         if (StringUtils.isBlank(credentialsId)) {
             logger.log("INFO: credentials is not configured.");
-            build.setResult(Result.UNSTABLE);
+            build.setResult(Result.FAILURE);
             return true;
         }
         UsernamePasswordCredentials credentials = getCredentialsById(credentialsId, build, logger);
@@ -234,7 +245,8 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
                 almTestSetFolder,
                 almTimeout,
                 testingResultFile,
-                jenkinsServerUrl);
+                jenkinsServerUrl,
+                aliBuildId);
 
         VariableResolver<String> varResolver = new VariableResolver.ByMap<String>(build.getEnvironment(listener));
 
@@ -256,7 +268,7 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
         ds.scan();
         if (ds.getIncludedFilesCount() == 0) {
         	logger.log("INFO: No Test Report found.");
-            build.setResult(Result.UNSTABLE);
+            build.setResult(Result.FAILURE);
         } else {
         	logger.log("INFO: "+ ds.getIncludedFilesCount() +" test result file found.");
         	String[] files = ds.getIncludedFiles();
@@ -282,12 +294,13 @@ public class TestResultToALMUploader extends Recorder implements Serializable, M
                             uploadTestResultToAlmModel.getTestingTool(),
                             String.valueOf(build.getNumber()),
                             build.getParent().getDisplayName(),
-                            runUrl
+                            runUrl,
+                            uploadTestResultToAlmModel.getAliBuildId()
                     );
 	    			logger.log("INFO: Uploaded "+fullpath + ".");
     			} catch (Exception e) {
     				logger.log("WARN: there's exception while uploading "+fullpath + ".");
-    				build.setResult(Result.UNSTABLE);
+    				build.setResult(Result.FAILURE);
     			}
         	}
         }

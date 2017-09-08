@@ -42,11 +42,11 @@ public class RunManager {
                                     args.getRunType(),
                                     args.getEntityId(),
                                     _runHandler.getRunId()).publish(
-                                    _runHandler.getNameSuffix(),
-                                    args.getUrl(),
-                                    args.getDomain(),
-                                    args.getProject(),
-                                    logger);
+                                        _runHandler.getNameSuffix(),
+                                        args.getUrl(),
+                                        args.getDomain(),
+                                        args.getProject(),
+                                        logger);
                 }
                 _polling = false;
             }

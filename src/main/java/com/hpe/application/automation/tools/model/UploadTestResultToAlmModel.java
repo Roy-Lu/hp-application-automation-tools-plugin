@@ -44,11 +44,22 @@ public class UploadTestResultToAlmModel {
 	private String testingTool;
 	private String testingResultFile;
 	private String jenkinsServerUrl;
+	private String aliBuildId;
 
 	@DataBoundConstructor
-	public UploadTestResultToAlmModel(String almServerName, String almUserName,
-			String almPassword, String almDomain, String almProject, String testingFramework, String testingTool,
-			String almTestFolder , String almTestSetFolder, String almTimeout, String testingResultFile, String jenkinsServerUrl) {
+	public UploadTestResultToAlmModel(String almServerName,
+									  String almUserName,
+									  String almPassword,
+									  String almDomain,
+									  String almProject,
+									  String testingFramework,
+									  String testingTool,
+									  String almTestFolder ,
+									  String almTestSetFolder,
+									  String almTimeout,
+									  String testingResultFile,
+									  String jenkinsServerUrl,
+									  String aliBuildId) {
 
 		this.almServerName = almServerName;
 		this.almUserName = almUserName;
@@ -65,6 +76,8 @@ public class UploadTestResultToAlmModel {
 		
 		this.testingResultFile = testingResultFile;
 		this.jenkinsServerUrl = jenkinsServerUrl;
+
+		this.aliBuildId = aliBuildId;
 	}
 
 	public String getAlmUserName() {
@@ -114,8 +127,12 @@ public class UploadTestResultToAlmModel {
 		return jenkinsServerUrl;
 	}
 
+	public String getAliBuildId() {
+		return aliBuildId;
+	}
+
 	public Properties getProperties(EnvVars envVars,
-			VariableResolver<String> varResolver) {
+									VariableResolver<String> varResolver) {
 		return CreateProperties(envVars, varResolver);
 	}
 
@@ -207,6 +224,7 @@ public class UploadTestResultToAlmModel {
 				  testingFramework + "," +
 				  testingTool+ "," +
 				  testingResultFile + "," +
-				  jenkinsServerUrl;
+				  jenkinsServerUrl + "," +
+				  aliBuildId;
 	}
 }

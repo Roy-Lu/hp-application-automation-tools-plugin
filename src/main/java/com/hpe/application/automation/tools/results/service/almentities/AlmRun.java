@@ -14,5 +14,5 @@ public interface AlmRun extends AlmEntity{
 	public final String RUN_BUILD_REVISION= "build-revision";
 	public final String RUN_JENKINS_JOB_NAME="jenkins-job-name";
 	public final String RUN_JENKINS_URL="jenkins-url";
-	
+	public final String RUN_ALI_BUILD_ID="build";
 }

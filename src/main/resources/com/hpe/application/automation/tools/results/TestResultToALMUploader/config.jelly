@@ -68,6 +68,11 @@
     <f:entry title="Jenkins server URL" field="jenkinsServerUrl">
         <f:textbox name="uploadtest.jenkinsServerUrl" value="${instance.uploadTestResultToAlmModel.jenkinsServerUrl}"/>
     </f:entry>
+
+    <f:entry title="ALI Build Id" field="aliBuildId">
+        <f:textbox name="uploadtest.aliBuildId" value="${instance.uploadTestResultToAlmModel.aliBuildId}"/>
+    </f:entry>
+
 <!--
     <f:entry title="Timeout" field="almTimeout">
         <f:textbox name="uploadtest.almTimeout" value="${instance.uploadTestResultToAlmModel.almTimeout}"/>

@@ -32,7 +32,6 @@ public class DefaultExternalEntityUploadServiceImpl implements
 		IExternalEntityUploadService {
 
 	Logger logger;
-	
 
 	private AlmRestTool restTool;
 	
@@ -210,19 +209,21 @@ public class DefaultExternalEntityUploadServiceImpl implements
     			AlmRun.RUN_JENKINS_URL,
     			AlmRun.RUN_EXECUTION_DATE,
     			AlmRun.RUN_EXECUTION_TIME,
-    			AlmRun.RUN_STATUS
+    			AlmRun.RUN_STATUS,
+				AlmRun.RUN_ALI_BUILD_ID
     	};
     }
     
 	private AlmRun generateRun(String tester, 
-								AlmRun run, 
-								String testsetId, 
-								String testId, 
-								String testInstanceId, 
-								String testconfigId, 
-								String subversion,
-								String jobName,
-								String buildUrl) throws ExternalEntityUploadException{
+							   AlmRun run,
+							   String testsetId,
+							   String testId,
+							   String testInstanceId,
+							   String testconfigId,
+							   String subversion,
+							   String jobName,
+							   String buildUrl,
+							   String aliBuildId) throws ExternalEntityUploadException{
 		
 		run.setFieldValue(AlmRun.RUN_CONFIG_ID, String.valueOf(testconfigId));
 		run.setFieldValue(AlmRun.RUN_CYCLE_ID, String.valueOf(testsetId));
@@ -230,7 +231,7 @@ public class DefaultExternalEntityUploadServiceImpl implements
 		run.setFieldValue(AlmRun.RUN_TESTCYCL_UNIQUE_ID, String.valueOf(testInstanceId));
 		run.setFieldValue(AlmRun.RUN_JENKINS_JOB_NAME, jobName);
 		run.setFieldValue(AlmRun.RUN_JENKINS_URL, buildUrl);
-		
+		run.setFieldValue(AlmRun.RUN_ALI_BUILD_ID, aliBuildId);
 		
 		if(subversion != null && subversion.length() >0 ) {
 			run.setFieldValue(AlmRun.RUN_BUILD_REVISION, subversion);
@@ -331,15 +332,16 @@ public class DefaultExternalEntityUploadServiceImpl implements
 	}	
 	
 	@Override
-	public void UploadExternalTestSet(AlmRestInfo loginInfo, 
-							String reportFilePath, 
-							String testsetFolderPath, 
-							String testFolderPath, 
-							String testingFramework, 
-							String testingTool, 
-							String subversion,
-							String jobName, 
-							String buildUrl) throws ExternalEntityUploadException{
+	public void UploadExternalTestSet(AlmRestInfo loginInfo,
+									  String reportFilePath,
+									  String testsetFolderPath,
+									  String testFolderPath,
+									  String testingFramework,
+									  String testingTool,
+									  String subversion,
+									  String jobName,
+									  String buildUrl,
+									  String aliBuildId) throws ExternalEntityUploadException{
 		
 		logger.log("INFO: Start to parse file: " +reportFilePath);
 		
@@ -353,7 +355,7 @@ public class DefaultExternalEntityUploadServiceImpl implements
 			logger.log("INFO: parse resut file succeed.");
 		}
 		
-		if(testsets != null && testsets.size() >0 ) {
+		if(!testsets.isEmpty()) {
 			logger.log("INFO: Start to login to ALM Server.");
 			try {
 				if( restTool.login() ) {
@@ -372,7 +374,8 @@ public class DefaultExternalEntityUploadServiceImpl implements
 								testingTool, 
 								subversion, 
 								jobName, 
-								buildUrl);
+								buildUrl,
+								aliBuildId);
 					}
 				} else {
 					throw new ExternalEntityUploadException("Failed to login to ALM Server.");
@@ -380,11 +383,21 @@ public class DefaultExternalEntityUploadServiceImpl implements
 			} catch (Exception e) {
 				throw new ExternalEntityUploadException(e);
 			}
+		} else {
+			throw new ExternalEntityUploadException("There are no test result to upload.");
 		}
 	}
 	
 	
-	private void importExternalTestSet(List<AlmTestSet> testsets, String tester, int testsetFolderId, int testFolderId, String testingTool, String subversion, String jobName, String buildUrl ) throws ExternalEntityUploadException{
+	private void importExternalTestSet(List<AlmTestSet> testsets,
+									   String tester,
+									   int testsetFolderId,
+									   int testFolderId,
+									   String testingTool,
+									   String subversion,
+									   String jobName,
+									   String buildUrl,
+									   String aliBuildId) throws ExternalEntityUploadException{
 
 		
 		for (AlmTestSet testset : testsets){
@@ -422,16 +435,17 @@ public class DefaultExternalEntityUploadServiceImpl implements
 				}
 				
 				AlmRun run = (AlmRun) runs.get(0);
-				generateRun(tester, 
-							run,  
-							importedTestSet.getId(),
-							importedTest.getId(), 
-							importedTestInstance.getId(), 
-							mainTestConfig.getId(), 
-							subversion,
-							jobName,
-							buildUrl
-							);
+				generateRun(tester,
+						run,
+						importedTestSet.getId(),
+						importedTest.getId(),
+						importedTestInstance.getId(),
+						mainTestConfig.getId(),
+						subversion,
+						jobName,
+						buildUrl,
+						aliBuildId
+				);
 			}
 		}
 		

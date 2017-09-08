@@ -39,7 +39,7 @@ public class TestDefaultExternalEntityUploadServiceImpl {
 		String testFolderPath = "Import\\New Test Folder\\junit" + i;
 		String testsetFolderPath = "Import\\New Test Set Folder\\junit" +i;
 		long start = System.currentTimeMillis();
-		service.UploadExternalTestSet(loginInfo,reportFilePath, testsetFolderPath, testFolderPath, testingFramework, testingTool, subversion, "local","http://localhost:8085/");
+		service.UploadExternalTestSet(loginInfo,reportFilePath, testsetFolderPath, testFolderPath, testingFramework, testingTool, subversion, "local","http://localhost:8085/", "1");
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end -start));		
 		
@@ -65,7 +65,7 @@ public class TestDefaultExternalEntityUploadServiceImpl {
 		String testFolderPath = "Import\\New Test Folder\\testng"+i;
 		String testsetFolderPath = "Import\\New Test Set Folder\\testng"+i;
 		long start = System.currentTimeMillis();
-		service.UploadExternalTestSet(loginInfo,reportFilePath, testsetFolderPath, testFolderPath, testingFramework, testingTool, subversion, "local","http://localhost:8085/");
+		service.UploadExternalTestSet(loginInfo,reportFilePath, testsetFolderPath, testFolderPath, testingFramework, testingTool, subversion, "local","http://localhost:8085/", "1");
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end -start));		
 	}
@@ -91,7 +91,7 @@ public class TestDefaultExternalEntityUploadServiceImpl {
 		String testFolderPath = "Import\\New Test Folder\\nunit"+i;
 		String testsetFolderPath = "Import\\New Test Set Folder\\nunit"+i;
 		long start = System.currentTimeMillis();
-		service.UploadExternalTestSet(loginInfo,reportFilePath, testsetFolderPath, testFolderPath, testingFramework, testingTool, subversion, "local","http://localhost:8085/");
+		service.UploadExternalTestSet(loginInfo,reportFilePath, testsetFolderPath, testFolderPath, testingFramework, testingTool, subversion, "local","http://localhost:8085/", "1");
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end -start));	
 	}

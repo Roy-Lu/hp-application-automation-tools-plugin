@@ -196,7 +196,7 @@ public class AlmRestTool {
 	public <E extends AlmEntity> E createAlmEntity (E entity, String[] fieldsForCreation) throws ExternalEntityUploadException {
 		
 		CreateAlmEntityRequest createRequest = new CreateAlmEntityRequest(getRestClient(), entity, getPairListForAlmEntityFields(entity, fieldsForCreation) );
-		Response response = createRequest.perform();	
+		Response response = createRequest.perform();
 		if(response.isOk() && !response.toString().equals("")){
 			List<Map<String, String>> entities2 = XPathUtils.toEntities(response.toString());
 			List entities = getAlmEntityList(entities2, entity.getClass());
