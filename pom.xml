@@ -41,7 +41,7 @@
 	</parent>
 
 	<artifactId>hp-application-automation-tools-plugin</artifactId>
-	<version>5.3.4-beta-SNAPSHOT</version>
+	<version>5.4.1-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>HPE Application Automation Tools</name>
 	<description>The plugin integrates Jenkins with the following MicroFocus products - Service Virtualization, LoadRunner, Performance Center, Unified Functional Testing, QuickTest Professional, Service Test, Mobile Center, Application Lifecycle Management and Application Lifecycle Management Octane.</description>
@@ -84,7 +84,7 @@
 		<url>https://github.com/jenkinsci/hpe-application-automation-tools-plugin</url>
 		<tag>HEAD</tag>
 	</scm>
-	
+
 	<issueManagement>
 		<system>JIRA</system>
 		<url>
@@ -322,18 +322,18 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			 <plugin>
-			    <groupId>org.codehaus.mojo</groupId>
-			    <artifactId>animal-sniffer-maven-plugin</artifactId>
-					<version>1.16</version>
-			    <configuration>
-			      <signature>
-				<groupId>org.codehaus.mojo.signature</groupId>
-				<artifactId>java18</artifactId>
-				<version>1.0</version>
-			      </signature>
-			    </configuration>
-			  </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>animal-sniffer-maven-plugin</artifactId>
+				<version>1.16</version>
+				<configuration>
+					<signature>
+						<groupId>org.codehaus.mojo.signature</groupId>
+						<artifactId>java18</artifactId>
+						<version>1.0</version>
+					</signature>
+				</configuration>
+			</plugin>
 
 		</plugins>
 
@@ -433,11 +433,15 @@
 		<dependency>
 			<groupId>com.hp.sv</groupId>
 			<artifactId>SVConfigurator</artifactId>
-			<version>4.10.1.48219</version>
+			<version>4.20.0.49985</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-io</groupId>
 					<artifactId>commons-io</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -454,7 +458,7 @@
 		<dependency>
 			<artifactId>integrations-sdk</artifactId>
 			<groupId>com.hpe.adm.octane.ciplugins</groupId>
-			<version>1.5.2</version>
+			<version>1.5.6</version>
 		</dependency>
 
 		<!-- Obsolete TO BE REMOVED -->
@@ -649,10 +653,10 @@
 					<groupId>commons-io</groupId>
 					<artifactId>commons-io</artifactId>
 				</exclusion>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
+				<exclusion>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpclient</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
