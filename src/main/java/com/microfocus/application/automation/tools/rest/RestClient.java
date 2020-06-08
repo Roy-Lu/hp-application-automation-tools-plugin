@@ -50,6 +50,7 @@ import hudson.ProxyConfiguration;
 import com.microfocus.application.automation.tools.sse.sdk.HttpRequestDecorator;
 
 import com.microfocus.adm.performancecenter.plugins.common.rest.RESTConstants;
+import org.apache.commons.lang3.StringUtils;
 
 /***
  *
@@ -177,7 +178,7 @@ public class RestClient implements Client {
     @Override
     public Response httpPost(
             String url,
-            byte[] data,
+            String data,
             Map<String, String> headers,
             ResourceAccessLevel resourceAccessLevel) {
 
@@ -197,7 +198,7 @@ public class RestClient implements Client {
     @Override
     public Response httpPut(
             String url,
-            byte[] data,
+            String data,
             Map<String, String> headers,
             ResourceAccessLevel resourceAccessLevel) {
 
@@ -237,7 +238,7 @@ public class RestClient implements Client {
             String type,
             String url,
             String queryString,
-            byte[] data,
+            String data,
             Map<String, String> headers,
             ResourceAccessLevel resourceAccessLevel) {
 
@@ -276,7 +277,7 @@ public class RestClient implements Client {
     private void prepareHttpRequest(
             HttpURLConnection connnection,
             Map<String, String> headers,
-            byte[] bytes) {
+            String bytes) {
 
         // set all cookies for request
         connnection.setRequestProperty(RESTConstants.COOKIE, getCookiesString());
@@ -289,13 +290,13 @@ public class RestClient implements Client {
     /**
      * Set connection data
      */
-    private void setConnectionData(HttpURLConnection connnection, byte[] bytes) {
+    private void setConnectionData(HttpURLConnection connnection, String content) {
 
-        if (bytes != null && bytes.length > 0) {
+        if (StringUtils.isNotEmpty(content)) {
             connnection.setDoOutput(true);
             try {
                 OutputStream out = connnection.getOutputStream();
-                out.write(bytes);
+                out.write(content.getBytes());
                 out.flush();
                 out.close();
             } catch (Exception cause) {

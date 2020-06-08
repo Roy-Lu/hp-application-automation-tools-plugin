@@ -21,7 +21,7 @@
 package com.microfocus.application.automation.tools.sse;
 
 import com.microfocus.application.automation.tools.model.SseModel;
-import com.microfocus.application.automation.tools.rest.RestClient;
+import com.microfocus.application.automation.tools.rest.RestHttpClient;
 import com.microfocus.application.automation.tools.sse.result.model.junit.Testsuites;
 import com.microfocus.application.automation.tools.sse.sdk.Args;
 import com.microfocus.application.automation.tools.sse.sdk.Logger;
@@ -36,7 +36,7 @@ import hudson.util.VariableResolver;
  */
 public class SSEBuilderPerformer {
     
-    private final RunManager _runManager = new RunManager();
+    private final RunManager runManager = new RunManager();
     
     public Testsuites start(
             SseModel model,
@@ -47,18 +47,19 @@ public class SSEBuilderPerformer {
 
         Args args = new ArgsFactory().createResolved(model, buildVariableResolver);
 
-        RestClient restClient;
+        RestHttpClient restClient;
 
-        restClient = new RestClient(args.getUrl(),
+        restClient = new RestHttpClient(args.getUrl(),
                 args.getDomain(),
                 args.getProject(),
-                args.getUsername());
+                args.getUsername(),
+                logger);
 
-        ret = _runManager.execute(restClient, args, logger);
+        ret = runManager.execute(restClient, args, logger);
         return ret;
     }
     
     public void stop() {
-        _runManager.stop();
+        runManager.stop();
     }
 }

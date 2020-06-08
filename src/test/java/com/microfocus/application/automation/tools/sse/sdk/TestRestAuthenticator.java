@@ -91,7 +91,7 @@ public class TestRestAuthenticator extends TestCase {
         @Override
         public Response httpPost(
                 String url,
-                byte[] data,
+                String data,
                 Map<String, String> headers,
                 ResourceAccessLevel resourceAccessLevel) {
             return new Response(null, null, null, HttpURLConnection.HTTP_OK);

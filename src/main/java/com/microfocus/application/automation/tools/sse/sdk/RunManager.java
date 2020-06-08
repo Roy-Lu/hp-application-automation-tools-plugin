@@ -21,7 +21,6 @@
 package com.microfocus.application.automation.tools.sse.sdk;
 
 import com.microfocus.application.automation.tools.common.SSEException;
-import com.microfocus.application.automation.tools.rest.RestClient;
 import com.microfocus.application.automation.tools.sse.common.StringUtils;
 import com.microfocus.application.automation.tools.sse.result.PublisherFactory;
 import com.microfocus.application.automation.tools.sse.result.model.junit.Testsuites;
@@ -46,7 +45,7 @@ public class RunManager {
     /**
      * Execute
      */
-    public Testsuites execute(RestClient client, Args args, Logger logger)
+    public Testsuites execute(Client client, Args args, Logger logger)
             throws InterruptedException {
         Testsuites ret = null;
         _logger = logger;
@@ -77,7 +76,7 @@ public class RunManager {
     /**
      * Initialize
      */
-    private void initialize(Args args, RestClient client) {
+    private void initialize(Args args, Client client) {
         String entityId = args.getEntityId();
         _runHandler = new RunHandlerFactory().create(client, args.getRunType(), entityId);
         _pollHandler = new PollHandlerFactory().create(client, args.getRunType(), entityId);

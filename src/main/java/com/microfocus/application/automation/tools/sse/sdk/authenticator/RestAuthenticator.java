@@ -76,9 +76,9 @@ public class RestAuthenticator implements Authenticator {
             authenticationPoint = null;
         }
         if (authenticationPoint == null) {
-            authenticationPoint = client.getServerUrl().endsWith("/") ?
-                    client.getServerUrl() + AUTHENTICATE_POINT :
-                    client.getServerUrl() + "/" + AUTHENTICATE_POINT;
+            authenticationPoint = client.getServerUrl().endsWith("/")
+                    ? client.getServerUrl() + AUTHENTICATE_POINT
+                    : client.getServerUrl() + "/" + AUTHENTICATE_POINT;
         }
         logger.log("Try to authenticate through: " + authenticationPoint);
     }
@@ -185,8 +185,7 @@ public class RestAuthenticator implements Authenticator {
 
         if (authenticationPoint == null) {
             logger.log(String.format("Failed to get authenticate authenticate point. Exception %s", response.getFailure()));
-        }
-        else {
+        } else {
             authenticationPoint = authenticationPoint.replace("\"", "");
             authenticationPoint += "/authenticate";
             logger.log("Got authenticate point:" + authenticationPoint);
@@ -248,7 +247,7 @@ public class RestAuthenticator implements Authenticator {
         Response response =
                 client.httpPost(
                         client.build("rest/site-session"),
-                        generateClientTypeData(clientType),
+                        String.format("<session-parameters><client-type>%s</client-type></session-parameters>", clientType),
                         headers,
                         ResourceAccessLevel.PUBLIC);
         boolean ret = response.isOk();
@@ -258,10 +257,5 @@ public class RestAuthenticator implements Authenticator {
             logger.log("Session created.");
         }
         return ret;
-    }
-
-    private byte[] generateClientTypeData(String clientType) {
-        String data = String.format("<session-parameters><client-type>%s</client-type></session-parameters>", clientType);
-        return data.getBytes();
     }
 }

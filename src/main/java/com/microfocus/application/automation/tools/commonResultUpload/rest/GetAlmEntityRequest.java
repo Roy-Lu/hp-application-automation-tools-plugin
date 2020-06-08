@@ -23,8 +23,8 @@
 package com.microfocus.application.automation.tools.commonResultUpload.rest;
 
 import com.microfocus.application.automation.tools.commonResultUpload.CommonUploadLogger;
-import com.microfocus.application.automation.tools.rest.RestClient;
 import com.microfocus.application.automation.tools.sse.common.XPathUtils;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 import org.apache.commons.lang.StringUtils;
@@ -34,10 +34,10 @@ import java.util.Map;
 
 public class GetAlmEntityRequest {
 
-    private RestClient client;
+    private Client client;
     private CommonUploadLogger logger;
 
-    public GetAlmEntityRequest(RestClient client, CommonUploadLogger logger) {
+    public GetAlmEntityRequest(Client client, CommonUploadLogger logger) {
         this.client = client;
         this.logger = logger;
     }

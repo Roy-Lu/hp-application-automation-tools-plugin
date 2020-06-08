@@ -34,7 +34,7 @@ import com.microfocus.application.automation.tools.commonResultUpload.xmlreader.
 import com.microfocus.application.automation.tools.commonResultUpload.xmlreader.model.RunStatusMap;
 import com.microfocus.application.automation.tools.commonResultUpload.xmlreader.XmlReader;
 import com.microfocus.application.automation.tools.commonResultUpload.xmlreader.model.XmlResultEntity;
-import com.microfocus.application.automation.tools.rest.RestClient;
+import com.microfocus.application.automation.tools.rest.RestHttpClient;
 import com.microfocus.application.automation.tools.results.service.AlmRestTool;
 import com.microfocus.application.automation.tools.sse.sdk.authenticator.AuthenticationTool;
 import hudson.model.Run;
@@ -44,7 +44,7 @@ import java.util.Map;
 
 public class Uploader {
 
-    private RestClient restClient;
+    private RestHttpClient restClient;
     private Map<String, String> params;
     private CommonUploadLogger logger;
     private CustomizationService cs;
@@ -61,10 +61,11 @@ public class Uploader {
     }
 
     public void upload() {
-        restClient = new RestClient(params.get("almServerUrl"),
+        restClient = new RestHttpClient(params.get("almServerUrl"),
                 params.get("almDomain"),
                 params.get("almProject"),
-                params.get("username"));
+                params.get("username"),
+                logger);
 
         boolean login = AuthenticationTool.getInstance().authenticate(restClient,
                 params.get("username"), params.get("password"),

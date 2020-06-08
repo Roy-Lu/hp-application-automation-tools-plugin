@@ -34,9 +34,13 @@ public class EventLogRequest extends GetRequest {
     
     @Override
     protected String getSuffix() {
-        
+        return "event-log-reads";
+    }
+
+    @Override
+    protected String getQueryString() {
         return String.format(
-                "event-log-reads?query={context[\"*Timeslot:%%20%s%%3B*\"]}&fields=id,event-type,creation-time,action,description",
+                "query={context[\"*Timeslot:%%20%s%%3B*\"]}&fields=id,event-type,creation-time,action,description",
                 _timeslotId);
     }
 }

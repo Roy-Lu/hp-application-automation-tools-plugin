@@ -43,36 +43,30 @@ public abstract class GeneralPostRequest extends GeneralRequest {
     
     @Override
     protected Map<String, String> getHeaders() {
-
         Map<String, String> ret = new HashMap<String, String>();
         ret.put(RESTConstants.CONTENT_TYPE, RESTConstants.APP_XML);
         ret.put(RESTConstants.ACCEPT, RESTConstants.APP_XML);
-
         return ret;
     }
     
     @Override
     public Response perform() {
-        
         return _client.httpPost(
                 getUrl(),
-                getDataBytes(),
+                getContent(),
                 getHeaders(),
                 ResourceAccessLevel.PROTECTED);
     }
     
-    private byte[] getDataBytes() {
-        
+    private String getContent() {
         StringBuilder builder = new StringBuilder("<Entity><Fields>");
         for (Pair<String, String> currPair : getDataFields()) {
             builder.append(RestXmlUtils.fieldXml(currPair.getFirst(), currPair.getSecond()));
         }
-        
-        return builder.append("</Fields></Entity>").toString().getBytes();
+        return builder.append("</Fields></Entity>").toString();
     }
     
     protected List<Pair<String, String>> getDataFields() {
-        
         return new ArrayList<Pair<String, String>>(0);
     }
 }

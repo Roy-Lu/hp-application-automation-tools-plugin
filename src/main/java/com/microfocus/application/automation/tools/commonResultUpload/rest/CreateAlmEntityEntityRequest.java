@@ -23,7 +23,7 @@
 package com.microfocus.application.automation.tools.commonResultUpload.rest;
 
 import com.microfocus.application.automation.tools.commonResultUpload.CommonUploadLogger;
-import com.microfocus.application.automation.tools.rest.RestClient;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 
@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class CreateAlmEntityEntityRequest extends BasicPostEntityRequest {
 
-    public CreateAlmEntityEntityRequest(RestClient client, CommonUploadLogger logger) {
+    public CreateAlmEntityEntityRequest(Client client, CommonUploadLogger logger) {
         super(client, logger, "Create");
     }
 
@@ -40,7 +40,7 @@ public class CreateAlmEntityEntityRequest extends BasicPostEntityRequest {
         String url = client.buildRestRequest(restPrefix);
         Response response = client.httpPost(
                 url,
-                getDataBytes(valueMap),
+                getContent(valueMap),
                 getHeaders(),
                 ResourceAccessLevel.PROTECTED);
         return handleResult(response, valueMap, restPrefix);

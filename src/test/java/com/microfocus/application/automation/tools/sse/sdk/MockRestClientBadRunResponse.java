@@ -55,7 +55,7 @@ public class MockRestClientBadRunResponse extends RestClient4Test {
     }
     
     @Override
-    public Response httpPost(String url, byte[] data, Map<String, String> headers, ResourceAccessLevel resourceAccessLevel) {
+    public Response httpPost(String url, String data, Map<String, String> headers, ResourceAccessLevel resourceAccessLevel) {
         
         Response ret = new Response();
         if (url.contains("startrun")) {

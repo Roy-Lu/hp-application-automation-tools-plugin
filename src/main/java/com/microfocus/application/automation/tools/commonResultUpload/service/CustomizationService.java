@@ -25,6 +25,7 @@ package com.microfocus.application.automation.tools.commonResultUpload.service;
 import com.microfocus.application.automation.tools.commonResultUpload.CommonUploadLogger;
 import com.microfocus.application.automation.tools.rest.RestClient;
 import com.microfocus.application.automation.tools.sse.common.XPathUtils;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 import org.w3c.dom.Document;
@@ -40,12 +41,12 @@ public class CustomizationService {
     public static final String TEST_ENTITY_NAME = "test";
     public static final String TEST_SET_ENTITY_NAME = "test-set";
 
-    private RestClient client;
+    private Client client;
     private CommonUploadLogger logger;
     private Map<String, Map<String, String>> subtypeCache;
     private Map<String, Map<String, String>> fieldCache;
 
-    public CustomizationService(RestClient client, CommonUploadLogger logger) {
+    public CustomizationService(Client client, CommonUploadLogger logger) {
         this.client = client;
         this.logger = logger;
         subtypeCache = new HashMap<>();

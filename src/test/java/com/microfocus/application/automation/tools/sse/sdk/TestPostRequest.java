@@ -59,7 +59,7 @@ public class TestPostRequest extends TestCase {
         @Override
         public Response httpPost(
                 String url,
-                byte[] data,
+                String data,
                 Map<String, String> headers,
                 ResourceAccessLevel resourceAccessLevel) {
             

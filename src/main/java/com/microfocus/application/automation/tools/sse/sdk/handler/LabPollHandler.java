@@ -73,8 +73,9 @@ public class LabPollHandler extends PollHandler {
     
     @Override
     protected void log(Logger logger) {
-        
-        _eventLogHandler.log(logger);
+        // This is for getting timeslot event logs.
+        // Comment this because the event log query url would be consider illegal by apache http client.
+        // _eventLogHandler.log(logger);
     }
     
     @Override

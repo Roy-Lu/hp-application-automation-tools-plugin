@@ -24,6 +24,7 @@ package com.microfocus.application.automation.tools.commonResultUpload.service;
 
 import com.microfocus.application.automation.tools.commonResultUpload.CommonUploadLogger;
 import com.microfocus.application.automation.tools.rest.RestClient;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 
@@ -33,10 +34,10 @@ public class VersionControlService  {
     public static final String CHECK_OUT = "check-out";
     public static final String CHECK_UNDO_CHECK_OUT = "undo-check-out";
 
-    private RestClient client;
+    private Client client;
     private CommonUploadLogger logger;
 
-    public VersionControlService(RestClient client, CommonUploadLogger logger) {
+    public VersionControlService(Client client, CommonUploadLogger logger) {
         this.client = client;
         this.logger = logger;
     }

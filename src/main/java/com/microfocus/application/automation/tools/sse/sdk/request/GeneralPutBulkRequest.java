@@ -55,12 +55,12 @@ public abstract class GeneralPutBulkRequest extends GeneralRequest {
     protected Response perform() {
         return _client.httpPut(
                 getUrl(),
-                getDataBytes(),
+                getContent(),
                 getHeaders(),
                 ResourceAccessLevel.PROTECTED);
     }
     
-    private byte[] getDataBytes() {
+    private String getContent() {
         
         StringBuilder builder = new StringBuilder("<Entities>");
         for (Map<String, String> values : getFields()) {
@@ -71,7 +71,7 @@ public abstract class GeneralPutBulkRequest extends GeneralRequest {
             builder.append("</Fields></Entity>");
         }
         
-        return builder.append("</Entities>").toString().getBytes();
+        return builder.append("</Entities>").toString();
         
     }
 }

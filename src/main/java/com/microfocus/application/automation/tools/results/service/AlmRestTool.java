@@ -27,12 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.microfocus.application.automation.tools.common.Pair;
-import com.microfocus.application.automation.tools.rest.RestClient;
+import com.microfocus.application.automation.tools.rest.RestHttpClient;
 import com.microfocus.application.automation.tools.results.service.almentities.AlmEntity;
 import com.microfocus.application.automation.tools.results.service.rest.CreateAlmEntityRequest;
 import com.microfocus.application.automation.tools.results.service.rest.GetAlmEntityRequest;
 import com.microfocus.application.automation.tools.results.service.rest.UpdateAlmEntityRequest;
 import com.microfocus.application.automation.tools.sse.common.XPathUtils;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.Logger;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
@@ -42,28 +43,29 @@ import com.microfocus.application.automation.tools.sse.sdk.authenticator.RestAut
 public class AlmRestTool {
 	
 	private Logger _logger ;
-	private RestClient restClient;
+	private Client restClient;
 	private AlmRestInfo almLoginInfo;
 
 	private final String USERNAMEPRETAG = "<Username>";
 	private final String USERNAMESUBTAG = "</Username>";
 
-	public AlmRestTool(RestClient restClient, Logger logger) {
+	public AlmRestTool(Client restClient, Logger logger) {
 		this.restClient = restClient;
 		this._logger = logger;
 	}
 
-	public AlmRestTool (AlmRestInfo almLoginInfo, Logger logger) {
-		this.restClient = new RestClient(
-        							almLoginInfo.getServerUrl(),
-        							almLoginInfo.getDomain(),
-        							almLoginInfo.getProject(),
-        							almLoginInfo.getUserName());
+	public AlmRestTool(AlmRestInfo almLoginInfo, Logger logger) {
+		this.restClient = new RestHttpClient(
+				almLoginInfo.getServerUrl(),
+				almLoginInfo.getDomain(),
+				almLoginInfo.getProject(),
+				almLoginInfo.getUserName(),
+				logger);
 		this.almLoginInfo = almLoginInfo;
 		this._logger = logger;
 	}
 
-	public RestClient getRestClient() {
+	public Client getRestClient() {
 		return this.restClient;
 	}
 
@@ -106,7 +108,7 @@ public class AlmRestTool {
      */
 	public List<Pair<String, String>> getPairListForAlmEntityFields(AlmEntity almEntity, List<String> fieldNames){
 		List<Pair<String, String>> pairs = new ArrayList<Pair<String, String>>();
-		for(String fieldName : fieldNames) {
+		for (String fieldName : fieldNames) {
 			pairs.add(new Pair<String, String>(fieldName, String.valueOf(almEntity.getFieldValue(fieldName))));	
 		}
 		return pairs;
@@ -117,7 +119,7 @@ public class AlmRestTool {
      */
 	public List<Pair<String, String>> getPairListForAlmEntityFields(AlmEntity almEntity, String[] fieldNames){
 		List<Pair<String, String>> pairs = new ArrayList<Pair<String, String>>();
-		for(String fieldName : fieldNames) {
+		for (String fieldName : fieldNames) {
 			pairs.add(new Pair<String, String>(fieldName, String.valueOf(almEntity.getFieldValue(fieldName))));	
 		}
 		return pairs;
@@ -131,7 +133,7 @@ public class AlmRestTool {
 		
 		Map<String, String> fieldsMap = new HashMap<String, String> ();
 		
-		for(String fieldName : fieldNames) {
+		for (String fieldName : fieldNames) {
 			fieldsMap.put(fieldName, String.valueOf(almEntity.getFieldValue(fieldName)));	
 		}
 		fieldsMapList.add(fieldsMap);
@@ -142,7 +144,7 @@ public class AlmRestTool {
      * Populate ALM entity field value
      */
 	public void populateAlmEntityFieldValue(Map<String, String> mapFieldValue, AlmEntity almEntity) {
-		for(Map.Entry<String, String> entry : mapFieldValue.entrySet()){
+		for (Map.Entry<String, String> entry : mapFieldValue.entrySet()) {
 			almEntity.setFieldValue(entry.getKey(), entry.getValue());
 		}
 	}
@@ -153,7 +155,7 @@ public class AlmRestTool {
 	public <E extends AlmEntity>  List<E> getAlmEntityList(List<Map<String, String>> entities, Class<E> c) {
 		
 		List<E> entityList = new ArrayList<E> ();
-		for(Map<String, String> fieldValueMap:  entities) {
+		for (Map<String, String> fieldValueMap:  entities) {
 			try {
 				E entity = c.newInstance();
 				populateAlmEntityFieldValue(fieldValueMap, entity);

@@ -38,13 +38,13 @@ public interface Client {
 
     Response httpPost(
             String url,
-            byte[] data,
+            String data,
             Map<String, String> headers,
             ResourceAccessLevel resourceAccessLevel);
 
     Response httpPut(
             String url,
-            byte[] data,
+            String data,
             Map<String, String> headers,
             ResourceAccessLevel resourceAccessLevel);
 
@@ -58,5 +58,4 @@ public interface Client {
 
     String getUsername();
 
-    Map<String, String> getCookies();
 }

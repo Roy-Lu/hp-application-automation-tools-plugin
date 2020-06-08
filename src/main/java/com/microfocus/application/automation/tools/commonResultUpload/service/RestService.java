@@ -28,6 +28,7 @@ import com.microfocus.application.automation.tools.commonResultUpload.rest.GetAl
 import com.microfocus.application.automation.tools.commonResultUpload.rest.UpdateAlmEntityEntityRequest;
 import com.microfocus.application.automation.tools.rest.RestClient;
 import com.microfocus.application.automation.tools.sse.common.XPathUtils;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 import org.w3c.dom.Document;
@@ -39,14 +40,14 @@ import java.util.Map;
 
 public class RestService {
 
-    private RestClient restClient;
+    private Client restClient;
     private CreateAlmEntityEntityRequest createAlmEntityRequest;
     private GetAlmEntityRequest getAlmEntityRequest;
     private UpdateAlmEntityEntityRequest updateAlmEntityRequest;
     private UDFTranslator udt;
     private CommonUploadLogger logger;
 
-    public RestService(RestClient restClient, CommonUploadLogger logger, UDFTranslator udt) {
+    public RestService(Client restClient, CommonUploadLogger logger, UDFTranslator udt) {
         this.restClient = restClient;
         this.logger = logger;
         createAlmEntityRequest = new CreateAlmEntityEntityRequest(restClient, logger);

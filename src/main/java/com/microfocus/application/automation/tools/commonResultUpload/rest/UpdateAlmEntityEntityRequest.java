@@ -24,7 +24,7 @@ package com.microfocus.application.automation.tools.commonResultUpload.rest;
 
 import com.microfocus.adm.performancecenter.plugins.common.rest.RESTConstants;
 import com.microfocus.application.automation.tools.commonResultUpload.CommonUploadLogger;
-import com.microfocus.application.automation.tools.rest.RestClient;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.ResourceAccessLevel;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 
@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class UpdateAlmEntityEntityRequest extends BasicPostEntityRequest {
 
-    public UpdateAlmEntityEntityRequest(RestClient client, CommonUploadLogger logger) {
+    public UpdateAlmEntityEntityRequest(Client client, CommonUploadLogger logger) {
         super(client, logger, "Update");
     }
 
@@ -42,7 +42,7 @@ public class UpdateAlmEntityEntityRequest extends BasicPostEntityRequest {
         String url = client.buildRestRequest(String.format("%s/%s", restPrefix, valueMap.get("id")));
         Response response = client.httpPut(
                 url,
-                getDataBytes(valueMap),
+                getContent(valueMap),
                 getHeaders(),
                 ResourceAccessLevel.PROTECTED);
         return handleResult(response, valueMap, restPrefix);

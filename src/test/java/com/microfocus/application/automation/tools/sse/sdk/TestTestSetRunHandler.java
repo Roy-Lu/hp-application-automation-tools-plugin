@@ -58,7 +58,7 @@ public class TestTestSetRunHandler extends TestCase {
         }
 
         @Override
-        public Response httpPost(String url, byte[] data, Map<String, String> headers, ResourceAccessLevel resourceAccessLevel) {
+        public Response httpPost(String url, String data, Map<String, String> headers, ResourceAccessLevel resourceAccessLevel) {
 
             return new Response(null, null, null, HttpURLConnection.HTTP_OK);
         }
@@ -80,7 +80,7 @@ public class TestTestSetRunHandler extends TestCase {
         }
 
         @Override
-        public Response httpPost(String url, byte[] data, Map<String, String> headers, ResourceAccessLevel resourceAccessLevel) {
+        public Response httpPost(String url, String data, Map<String, String> headers, ResourceAccessLevel resourceAccessLevel) {
 
             return new Response(null, null, null, HttpURLConnection.HTTP_OK);
         }

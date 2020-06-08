@@ -24,9 +24,9 @@ package com.microfocus.application.automation.tools.commonResultUpload.rest;
 
 import com.microfocus.adm.performancecenter.plugins.common.rest.RESTConstants;
 import com.microfocus.application.automation.tools.commonResultUpload.CommonUploadLogger;
-import com.microfocus.application.automation.tools.rest.RestClient;
 import com.microfocus.application.automation.tools.sse.common.RestXmlUtils;
 import com.microfocus.application.automation.tools.sse.common.XPathUtils;
+import com.microfocus.application.automation.tools.sse.sdk.Client;
 import com.microfocus.application.automation.tools.sse.sdk.Response;
 
 import java.util.HashMap;
@@ -38,11 +38,11 @@ public abstract class BasicPostEntityRequest {
     private static final String END = "</Title>";
     private static final String IGNORE_REQUIRED_FIELDS_VALIDATION = "X-QC-Ignore-Customizable-Required-Fields-Validation";
 
-    protected RestClient client;
+    protected Client client;
     protected CommonUploadLogger logger;
     protected String operation;
 
-    protected BasicPostEntityRequest(RestClient client, CommonUploadLogger logger, String operation) {
+    protected BasicPostEntityRequest(Client client, CommonUploadLogger logger, String operation) {
         this.client = client;
         this.logger = logger;
         this.operation = operation;
@@ -65,13 +65,13 @@ public abstract class BasicPostEntityRequest {
         );
     }
 
-    protected byte[] getDataBytes(Map<String, String> valueMap) {
+    protected String getContent(Map<String, String> valueMap) {
         StringBuilder builder = new StringBuilder("<Entity><Fields>");
         for (Map.Entry<String, String> entry : valueMap.entrySet()) {
             builder.append(RestXmlUtils.fieldXml(entry.getKey(), entry.getValue()));
         }
         builder.append("</Fields></Entity>");
-        return builder.toString().getBytes();
+        return builder.toString();
     }
 
     private String getResultNameOrId(Map<String, String> result) {

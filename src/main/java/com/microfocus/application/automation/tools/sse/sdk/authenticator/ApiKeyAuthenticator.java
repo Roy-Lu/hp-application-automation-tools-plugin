@@ -48,7 +48,7 @@ public class ApiKeyAuthenticator implements Authenticator {
         Response response =
                 client.httpPost(
                         client.build(APIKEY_LOGIN_API),
-                        String.format("{clientId:%s, secret:%s}", clientId, secret).getBytes(),
+                        String.format("{clientId:%s, secret:%s}", clientId, secret),
                         headers,
                         ResourceAccessLevel.PUBLIC);
         boolean result = response.isOk();
